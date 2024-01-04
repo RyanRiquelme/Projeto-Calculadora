@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Basica</title>
+<style>
+    body {
+        margin: 0;
+        display: flex;
+        background-color: #333;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .resultado {
+        border: 1px solid black;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 18px;
+    }
+
+    button {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+        font-size: 16px;
+    }
+</style></head>
+
+
+
+<body>
+    <div class="container">
+        <div class="resultado" id="resultado">0</div>
+
+        <button onclick="limpar()">C</button>
+        <button onclick="concatenar('0')">0</button>
+        <button onclick="operacao('/')">/</button>
+        <button onclick="operacao('+')">+</button>
+        <br>
+        <button onclick="concatenar('7')">7</button>
+        <button onclick="concatenar('8')">8</button>
+        <button onclick="concatenar('9')">9</button>
+        <button onclick="operacao('-')">-</button>
+        <br>
+        <button onclick="concatenar('4')">4</button>
+        <button onclick="concatenar('5')">5</button>
+        <button onclick="concatenar('6')">6</button>
+        <button onclick="operacao('*')">*</button>
+
+        <br>
+        <button onclick="concatenar('1')">1</button>
+        <button onclick="concatenar('2')">2</button>
+        <button onclick="concatenar('3')">3</button>
+        <button onclick="calcular()">=</button>
+
+        <br>
+
+
+
+        <br>
+
+    </div>
+
+    <script>
+        // Obtém a referência do elemento de resultado
+        var resultadoElement = document.getElementById('resultado');
+
+        // Variáveis para armazenar valores da calculadora
+        var valorAtual = '';       // Valor atual sendo digitado
+        var valorAnterior = '';    // Valor anterior antes de uma operação
+        var operador = '';         // Operador utilizado (+, -, *, /)
+
+        // Função para concatenar um número ao valor atual
+        function concatenar(numero) {
+            valorAtual += numero;
+            atualizarDisplay();
+        }
+
+        // Função para definir o operador e armazenar o valor atual como valor anterior
+        function operacao(op) {
+            // Verifica se há um valor atual antes de definir o operador
+            if (valorAtual !== '') {
+                // Armazena o operador selecionado
+                operador = op;
+
+                // Armazena o valor atual como valor anterior
+                valorAnterior = valorAtual;
+
+                // Reseta o valor atual para iniciar uma nova entrada
+                valorAtual = '';
+
+                // Atualiza o visor da calculadora com o valor atual
+                atualizarDisplay();
+            }
+        }
+
+        // Função para realizar o cálculo com base no operador selecionado
+        function calcular() {
+            // Verifica se há valores para calcular
+            if (valorAtual !== '' && valorAnterior !== '') {
+                // Realiza a operação com base no operador
+                switch (operador) {
+                    case '+':
+                        valorAtual = (parseFloat(valorAnterior) + parseFloat(valorAtual)).toString();
+                        break;
+                    case '-':
+                        valorAtual = (parseFloat(valorAnterior) - parseFloat(valorAtual)).toString();
+                        break;
+                    case '*':
+                        valorAtual = (parseFloat(valorAnterior) * parseFloat(valorAtual)).toString();
+                        break;
+                    case '/':
+                        valorAtual = (parseFloat(valorAnterior) / parseFloat(valorAtual)).toString();
+                        break;
+                }
+
+                // Reseta as variáveis de operação
+                valorAnterior = '';
+                operador = '';
+
+                // Atualiza o visor da calculadora com o resultado
+                atualizarDisplay();
+            }
+        }
+
+        // Função para limpar todos os valores da calculadora
+        function limpar() {
+            // Reseta as variáveis de operação
+            valorAtual = '';
+            valorAnterior = '';
+            operador = '';
+
+            // Atualiza o visor da calculadora
+            atualizarDisplay();
+        }
+
+        // Função para atualizar o visor da calculadora
+        function atualizarDisplay() {
+            // Exibe o valor atual, ou '0' se estiver vazio
+            resultadoElement.textContent = valorAtual === '' ? '0' : valorAtual;
+        }
+    </script>
+
+
+  </body>
+</html>
